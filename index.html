@@ -1,0 +1,729 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music player</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="icon" href="https://icon-library.com/images/icon-of-music/icon-of-music-3.jpg">
+
+<div class="player">
+  <!-- Dashboard -->
+  <div class="dashboard">
+    <!-- Header -->
+    <header>
+      <h4>Now playing:</h4>
+      <h2>String 57th & 9th</h2>
+    </header>
+
+    <!-- CD -->
+    <div class="cd">
+      <div class="cd-thumb">
+      </div>
+    </div>
+
+    <!-- Control -->
+    <div class="control">
+      <div class="btn btn-repeat">
+        <i class="fas fa-redo"></i>
+      </div>
+      <div class="btn btn-prev">
+        <i class="fas fa-step-backward"></i>
+      </div>
+      <div class="btn btn-toggle-play">
+        <i class="fas fa-pause icon-pause"></i>
+        <i class="fas fa-play icon-play"></i>
+      </div>
+      <div class="btn btn-next">
+        <i class="fas fa-step-forward"></i>
+      </div>
+      <div class="btn btn-random">
+        <i class="fas fa-random"></i>
+      </div>
+      
+    </div>
+
+    <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100">
+
+    <audio id="audio" src=""></audio>
+  </div>
+
+  <!-- Playlist -->
+  <div class="playlist">
+  </div>
+ 
+    
+ 
+</div>
+<a href=""> HUỲNHNHƯ</a>
+<style>
+    :root {
+  --primary-color: #ec1f55;
+  --text-color: #333;
+}
+a{
+            position: relative;
+            font-size: 61px;
+            text-decoration: none;
+            line-height: 1em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: transparent;
+            -webkit-text-stroke:1px aqua;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        a:before{
+            content: "HUỲNHNHƯ";
+            color: #fff;
+            position: absolute;
+            width: 0;
+            border-right: none solid aqua;
+            overflow: hidden;
+            transition: 1s;
+            text-shadow: 0px 0px 10px aqua, 0px 0px 20px aqua, 0px 0px 30px aqua;
+            animation: ani 4s infinite linear;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        @keyframes ani {
+            0%{
+                width: 0;
+            }
+            50%{
+                width: 100%;
+            }
+            100%{
+                width: 0;
+            }
+        }
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: inherit;
+}
+
+body {
+  background: linear-gradient(-70deg, #ee7752, #e73c7e, #23a6d5, #23d5ab, #DA70D6, #ECAB53, #489620);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+  height: 100vh;
+  
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+html {
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+.player {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.player .icon-pause {
+  display: none;
+}
+
+.player.playing .icon-pause {
+  display: inline-block;
+}
+
+.player.playing .icon-play {
+  display: none;
+}
+
+.dashboard {
+  padding: 16px 16px 14px;
+  background-color: palevioletred;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 475px;
+  border-bottom: 1px solid #ebebeb;
+  border-radius: 5%;
+  z-index: 1;
+}
+
+/* HEADER */
+header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+header h4 {
+  color: var(--primary-color);
+  font-size: 16px;
+  color: #fff;
+  
+}
+
+header h2 {
+  color: var(--text-color);
+  font-size: 20px;
+}
+
+/* CD */
+.cd {
+  display: flex;
+  margin: auto;
+  width: 200px;
+}
+
+.cd-thumb {
+  width: 100%;
+  padding-top: 100%;
+  border-radius: 50%;
+  background-color: #333;
+  background-size: cover;
+  margin: auto;
+}
+
+/* CONTROL */
+.control {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 18px 0 8px 0;
+}
+
+.control .btn {
+  color: #666;
+  padding: 18px;
+  font-size: 18px;
+}
+
+.control .btn.active {
+  color: var(--primary-color);
+}
+
+.control .btn-toggle-play {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  font-size: 24px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-color);
+}
+
+.progress {
+  width: 100%;
+  -webkit-appearance: none;
+  height: 6px;
+  background: #000;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+
+.progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 6px;
+  background-color: var(--primary-color);
+  cursor: pointer;
+}
+
+/* PLAYLIST */
+.playlist {
+  margin-top: 408px;
+  padding: 12px;
+  
+}
+
+.song {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  background-color: transparent;
+  padding: 8px 16px;
+  border-radius: 5px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  
+}
+
+.song.active {
+  background-color: var(--primary-color);
+}
+
+.song:active {
+  opacity: 0.8;
+}
+
+.song.active .option,
+.song.active .author,
+.song.active .title {
+  color: #fff;
+}
+
+.song .thumb {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-size: cover;
+  margin: 0 8px;
+}
+
+.song .body {
+  flex: 1;
+  padding: 0 16px;
+}
+
+.song .title {
+  font-size: 20px;
+  color: var(--text-color);
+}
+
+.song .author {
+  font-size: 15px;
+  color: #000;
+}
+
+.song .option {
+  padding: 16px 8px;
+  color: #999;
+  font-size: 18px;
+}
+
+</style>
+<script>
+    // Một số bài hát có thể bị lỗi do liên kết bị hỏng. Vui lòng thay thế liên kết khác để có thể phát
+// Some songs may be faulty due to broken links. Please replace another link so that it can be played
+
+const $ = document.querySelector.bind(document);
+const $$ = document.querySelectorAll.bind(document);
+
+const PlAYER_STORAGE_KEY = "F8_PLAYER";
+
+const player = $(".player");
+const cd = $(".cd");
+const heading = $("header h2");
+const cdThumb = $(".cd-thumb");
+const audio = $("#audio");
+const playBtn = $(".btn-toggle-play");
+const progress = $("#progress");
+const prevBtn = $(".btn-prev");
+const nextBtn = $(".btn-next");
+const randomBtn = $(".btn-random");
+const repeatBtn = $(".btn-repeat");
+const playlist = $(".playlist");
+
+const app = {
+  currentIndex: 0,
+  isPlaying: false,
+  isRandom: false,
+  isRepeat: false,
+  config: {},
+  // (1/2) Uncomment the line below to use localStorage
+  // config: JSON.parse(localStorage.getItem(PlAYER_STORAGE_KEY)) || {},
+  songs: [
+    {
+      name: "Chạy Ngay Đi",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui964/ChayNgayDi-SonTungMTP-5468704.mp3?st=G2oUQahLGjNREKHJfn6Zeg&e=1652694011",
+      image: "https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/277681358_3258821207737713_3102496225167747484_n.jpg?_nc_cat=101&ccb=1-6&_nc_sid=09cbfe&_nc_ohc=KiqoZC-mTuwAX_W1WAn&_nc_ht=scontent.fsgn4-1.fna&oh=00_AT-Gs3KhKS7QTsJdpouj-o1cKhX_iFmyr0WUsv7nLPtlEA&oe=6287CA29",
+    },
+    {
+      name: "Chúng Ta Không Thuộc Về Nhau",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui925/ChungTaKhongThuocVeNhau-SonTungMTP-4528181.mp3?st=CqOZuPxaZSGq-VNdby9ebA&e=1652525759&download=true",
+      image:"https://scontent.fsgn3-1.fna.fbcdn.net/v/t39.30808-6/273588824_3217756265177541_5400588367629320069_n.jpg?_nc_cat=104&ccb=1-6&_nc_sid=174925&_nc_ohc=Sg42Fmhqt_IAX8gLOcb&_nc_ht=scontent.fsgn3-1.fna&oh=00_AT-UzpVMTyKBH3ni8ti2TOsKBALJXa7PpAEqqt7BbBuB0Q&oe=6287DBE0"
+    },  
+    {
+      name: "EM Của Ngày Hôm Qua",
+      singer: "Sơn Tùng M-TP",
+      path:
+        "https://c1-ex-swe.nixcdn.com/NhacCuaTui926/EmCuaNgayHomQua-SonTungMTP-2882720.mp3?st=Mf_kwO7AV8S3DBVEUkPWvQ&e=1652533322&download=true",
+      image: "https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-6/228833746_3077858312500671_283150319374595724_n.jpg?_nc_cat=111&ccb=1-6&_nc_sid=174925&_nc_ohc=Zp6PqHururQAX-M7pmn&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-lDOKLXThPwzX1M3v8b1NgleqqJwmY0J0rPfG3ub9f2Q&oe=6286C280"
+    },
+    {
+      name: "Buông Đôi Tay Nhau Ra",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui911/BuongDoiTayNhauRa-SonTungMTP-4184408.mp3?st=6wsGssizAqtSzgtd3Kx-Ag&e=1652526881&download=true",
+      image:
+       "https://scontent.fsgn8-1.fna.fbcdn.net/v/t1.6435-9/103671429_2737997789820060_952176810518388533_n.jpg?_nc_cat=111&ccb=1-6&_nc_sid=174925&_nc_ohc=H0SDk_mYuLsAX8XCpTT&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT9GyeFzmw5jTKU2sShF8SZdtagBPZokY7Clzw9QU4_83g&oe=62A64110"
+    },
+    {
+      name: "Muộn Rồi Mà Sao Còn",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/Believe_Audio19/MuonRoiMaSaoCon-SonTungMTP-7011803.mp3?st=7XXrtbHhwJcUOUTnMyAdBw&e=1652524572&download=true",
+      image:
+        "https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-6/279207547_3277165649236602_226110499374877757_n.jpg?_nc_cat=110&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=g4BtGDwrMfIAX8TlKKw&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT9g02IFLsj79oFUQT7A7jhT5AeHVLJm87sli68zXsrcTg&oe=6287BB74"
+    },
+    {
+      name: "Hãy Trao Cho Anh",
+      singer: "Sơn Tùng M-TP",
+      path:
+        "https://c1-ex-swe.nixcdn.com/NhacCuaTui985/HayTraoChoAnh-SonTungMTPSnoopDogg-6010660.mp3?st=n56sAdY0kh9vKEwoOvQCDw&e=1652688967&download=true",
+      image:
+       "https://scontent.fsgn13-2.fna.fbcdn.net/v/t1.6435-9/158288962_2968842153402288_1774348532808315788_n.jpg?_nc_cat=108&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=Z9Lsy4dansQAX95qkwt&_nc_ht=scontent.fsgn13-2.fna&oh=00_AT-yECKt3bGh187-NITq5xt_b-mpwbJBubll3htZtXZLag&oe=62A6DA1F"
+    },
+    {
+      name: "Không Phải Dạng Vừa Đâu",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui884/KhongPhaiDangVuaDau-SonTungMTP-3753840.mp3?st=o3kPwZov4DqV_AiXBiSAbA&e=1652708003&download=true",
+      image:
+        "https://scontent.fsgn3-1.fna.fbcdn.net/v/t39.30808-6/277553450_3253973428222491_3556181044200844393_n.jpg?_nc_cat=107&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=uwJA2nnF6VsAX8Ff_l1&_nc_ht=scontent.fsgn3-1.fna&oh=00_AT-lG_2qlzkmy-aey_3iq9uW8vv2A1rUjRL3Oz9LFd05bQ&oe=6287E55E"
+    },
+    {
+        name:"Như Ngày Hôm Qua",
+        singer:"Sơn Tùng M-TP",
+        path:"https://c1-ex-swe.nixcdn.com/NhacCuaTui913/NhuNgayHomQuaUpgrade-SonTungMTP-4282962.mp3?st=4dxJeyLs1Sx5rG7Qbz9cfg&e=1652528564&download=true",
+        image:   "https://scontent.fsgn8-2.fna.fbcdn.net/v/t1.6435-9/158727136_2968842576735579_7801539828968496464_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=atfLhPThaWsAX-jXfME&_nc_ht=scontent.fsgn8-2.fna&oh=00_AT-OaqniXrhDZWUHtBurtChFX1Cd3P_S-8TN3DkNis4dVQ&oe=62A8E0B9"
+
+    },
+    {
+      name: "Bình Yên Những Phút Giây",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui940/BinhYenNhungPhutGiay-SonTungMTP-4915711.mp3?st=C3xv9zoMRDbCoGoyq9LaoQ&e=1652534083&download=true",
+      image:
+        "https://scontent.fsgn8-2.fna.fbcdn.net/v/t1.6435-9/158401556_2968841893402314_7257119094798076579_n.jpg?_nc_cat=100&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=9WMhnHi-a2wAX_rnr5v&_nc_ht=scontent.fsgn8-2.fna&oh=00_AT9qLAIuTXf--D2BJCciljTOMKT9I7u1nvOan0X0e8C32A&oe=62A76973"
+    },
+    {
+      name: "Tiến Lên Việt Nam Ơi!",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui898/TienLenVietNamOi-SonTungMTP-4003040.mp3?st=haXurnxwFhs2H2ISjTUvUg&e=1652536936&download=true",
+      image:
+       "https://scontent.fsgn13-2.fna.fbcdn.net/v/t1.6435-9/158472439_2968842310068939_4462629357041479033_n.jpg?_nc_cat=106&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=ynPWJrUgKdUAX_RuuLW&_nc_ht=scontent.fsgn13-2.fna&oh=00_AT9VW0vsh94w7x71n3HKP5c0s_LqqEagc9Pgh4ns5EE77A&oe=62A69988"
+    },
+    {
+      name: "Remember Me",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui913/UpgradeRememberMe-SonTungMTP-4263862.mp3?st=qiZle-mwmAAiCoExogM41w&e=1652529939&download=true",
+      image:
+        "https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-6/273026787_3212089655744202_1967176923536839368_n.jpg?_nc_cat=110&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=9HpIQHn95FUAX-1AhBp&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-xQeDs7BAxMwI5R3hSq1gmb_qC__N6jAr3CaEeSy-ylg&oe=6286360A"
+    },
+    {
+      name: "Một Năm Mới Bình An",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui960/MotNamMoiBinhAn-SonTungMTP-4315569.mp3?st=8n5K5gIyGZHUOdPEs3Sy8Q&e=1652595684&download=true",
+      image:
+        "https://scontent.fsgn13-2.fna.fbcdn.net/v/t39.30808-6/269621405_3180710355548799_4699897494832048360_n.jpg?_nc_cat=109&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=vCw1f5AJfz8AX-hpYEs&_nc_ht=scontent.fsgn13-2.fna&oh=00_AT9UKUmVuCB9B9B99IaUCIqyWEPO8ghZNef1ziLvhJdmOw&oe=62873104"
+    },
+    {
+      name: "Ấn Nút Nhớ...Thả Giấc Mơ",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui899/AnNutNhoThaGiacMo-SonTungMTP-4009508.mp3?st=rURbRVtUwCZc5YHXURnxOw&e=1652527815&download=true",
+      image:
+       "https://scontent.fsgn4-1.fna.fbcdn.net/v/t39.30808-6/245919705_3135193743433794_8766938025185294743_n.jpg?_nc_cat=101&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=P-1liM51IbUAX8pz9re&_nc_oc=AQkjWx6XQguVAUrAbh4gpfnaImgqCI-XyuRUyNcC-J1kDcWxSOoILswBDCaNObW_8tg&_nc_ht=scontent.fsgn4-1.fna&oh=00_AT8DWZKbI-lrGt-CgbtjJr6bK_EMUDhKoyUYOtf6Q1OMXw&oe=62874693"
+    },
+    {
+      name: "Anh Sai Rồi",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui836/AnhSaiRoi-MTP-2647024.mp3?st=iY_5aKL8LTYBAyzaqx-1IA&e=1652532079&download=true",
+      image:
+        "https://scontent.fsgn8-1.fna.fbcdn.net/v/t39.30808-6/228833746_3077858312500671_283150319374595724_n.jpg?_nc_cat=111&ccb=1-6&_nc_sid=174925&_nc_ohc=Zp6PqHururQAX-M7pmn&_nc_ht=scontent.fsgn8-1.fna&oh=00_AT-lDOKLXThPwzX1M3v8b1NgleqqJwmY0J0rPfG3ub9f2Q&oe=6286C280"
+    },
+    {
+      name: "Nắng Ấm Xa Dần",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui891/NangAmXaDanOfficialRemix-SonTungMTPDJTrangMoonDJSlimV-3849594.mp3?st=Kqg_mWVE4L6VugvEY1VoDQ&e=1652681678&download=true",
+      image:
+        "https://scontent.fsgn4-1.fna.fbcdn.net/v/t1.6435-9/201405009_3053497508270085_8899425800318302808_n.jpg?_nc_cat=101&ccb=1-6&_nc_sid=730e14&_nc_ohc=lfEthn-jUW8AX9ezzLY&tn=Yb9pnK50KvTJvQoO&_nc_ht=scontent.fsgn4-1.fna&oh=00_AT8rxbnQHRFwVEEgca-7nfxNApwlcvmbT8Q91Vq9fMZjaw&oe=62A961D0"
+    },
+    {
+      name: "Đừng Về Trễ",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui837/DungVeTreRnbVersion-MTP-2691584.mp3?st=iGKNAIcY4Zvv7XNSxQ-13Q&e=1652613373&download=true",
+      image:
+       "https://scontent.fsgn8-2.fna.fbcdn.net/v/t1.6435-9/189613097_3026525504300619_8997963294961830214_n.jpg?_nc_cat=100&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=L0dqBPZcIrMAX9RbbK1&_nc_ht=scontent.fsgn8-2.fna&oh=00_AT_UuJaC-kNFdLGDTyVsquxCVQKicuRfQl2eyDsuKXkUvw&oe=62A7C46E"
+    },
+    {
+      name: "Em Đừng Đi ",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui197/EmDungDi-M-TP_3j3w3.mp3?st=BlTHgW7C5kKYFMtKqCWh6A&e=1652525235&download=true",
+      image:
+       "https://scontent.fsgn8-2.fna.fbcdn.net/v/t1.6435-9/131338835_2905450469741457_7323902483620397752_n.jpg?_nc_cat=105&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=pNTMSxtseYIAX94YL00&_nc_ht=scontent.fsgn8-2.fna&oh=00_AT9RjEwJLLq1d53MzV3yRVaxv9k0X9nIYIA8xfvk3vGZPA&oe=62A7EDFB"
+    },
+    {
+      name: "Lạc Trôi",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui949/LacTroiTripleDRemix-SonTungMTP-5164670.mp3?st=DKS0dt8w_KmsSmgGM1CQHw&e=1652542718&download=true",
+      image:
+       "https://scontent.fsgn4-1.fna.fbcdn.net/v/t1.6435-9/119709080_2823661727920332_7934748452378741865_n.jpg?_nc_cat=101&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=wyjMN8iFbssAX8H2-wj&_nc_ht=scontent.fsgn4-1.fna&oh=00_AT8UexgFOuCEzGHorU3uDHBxMPDekIf_h4KLqiPrpvJeNA&oe=62A69D86"
+    },
+    {
+      name: "Đừng Về Trễ",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui837/DungVeTreRnbVersion-MTP-2691584.mp3?st=iGKNAIcY4Zvv7XNSxQ-13Q&e=1652613373&download=true",
+      image:
+        "https://scontent.fsgn8-2.fna.fbcdn.net/v/t1.6435-9/158401556_2968841893402314_7257119094798076579_n.jpg?_nc_cat=100&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=9WMhnHi-a2wAX_rnr5v&_nc_ht=scontent.fsgn8-2.fna&oh=00_AT9qLAIuTXf--D2BJCciljTOMKT9I7u1nvOan0X0e8C32A&oe=62A76973"
+    },
+    {
+      name: "Cơn Mưa Ngang Qua",
+      singer: "Sơn Tùng M-TP",
+      path: "https://c1-ex-swe.nixcdn.com/NhacCuaTui849/ConMuaNgangQua-SonTungMTP-2944936.mp3?st=R7NPP6bpBch1yqkLVKciLw&e=1652717049&download=true",
+      image:
+        "https://scontent.fsgn3-1.fna.fbcdn.net/v/t1.6435-9/158695848_2968841693402334_1108122666995416613_n.jpg?_nc_cat=107&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=x3BaPGDalnQAX9G4WWF&_nc_oc=AQlgdVll_Mj5-R88rw8NGVpWPPZ5g4U3Q_-l0Z1XEyXm-FZpnCAB58Gpd7XgySTbXIM&tn=Yb9pnK50KvTJvQoO&_nc_ht=scontent.fsgn3-1.fna&oh=00_AT8nuT-MOW_wGcMBsce6ocqqPtrA80FRMmEYuzw-tkmssQ&oe=62A73A44"
+    },
+    {
+      name: "There's No One At All",
+      singer: "Sơn Tùng M-TP",
+      path: "https://data.chiasenhac.com/down2/2242/1/2241378-b5c30814/320/There%20s%20No%20One%20At%20All%20-%20Son%20Tung%20M%20TP%20(NhacPro.net).mp3?time=1652689771",
+      image:
+        "https://scontent.fsgn4-1.fna.fbcdn.net/v/t1.6435-9/158094172_2968842856735551_9100191396639424193_n.jpg?_nc_cat=101&ccb=1-6&_nc_sid=8bfeb9&_nc_ohc=u-iq40FQPpkAX8tl9Wd&_nc_ht=scontent.fsgn4-1.fna&oh=00_AT8zarhgx8Q6lap8hXoYP_upgjwHjE7H-3Pr5IE0iGgXQA&oe=62A7D518"
+    },
+  ],
+  setConfig: function (key, value) {
+    this.config[key] = value;
+    // (2/2) Uncomment the line below to use localStorage
+    // localStorage.setItem(PlAYER_STORAGE_KEY, JSON.stringify(this.config));
+  },
+  render: function () {
+    const htmls = this.songs.map((song, index) => {
+      return `
+                        <div class="song ${
+                          index === this.currentIndex ? "active" : ""
+                        }" data-index="${index}">
+                            <div class="thumb"
+                                style="background-image: url('${song.image}')">
+                            </div>
+                            <div class="body">
+                                <h3 class="title">${song.name}</h3>
+                                <p class="author">${song.singer}</p>
+                            </div>
+                            <div class="option">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </div>
+                        </div>
+                    `;
+    });
+    playlist.innerHTML = htmls.join("");
+  },
+  defineProperties: function () {
+    Object.defineProperty(this, "currentSong", {
+      get: function () {
+        return this.songs[this.currentIndex];
+      }
+    });
+  },
+  handleEvents: function () {
+    const _this = this;
+    const cdWidth = cd.offsetWidth;
+
+    // Xử lý CD quay / dừng
+    // Handle CD spins / stops
+    const cdThumbAnimate = cdThumb.animate([{ transform: "rotate(360deg)" }], {
+      duration: 10000, // 10 seconds
+      iterations: Infinity
+    });
+    cdThumbAnimate.pause();
+
+    // Xử lý phóng to / thu nhỏ CD
+    // Handles CD enlargement / reduction
+  //  document.onscroll = function () {
+      //const scrollTop = window.scrollY || document.documentElement.scrollTop;
+     // const newCdWidth = cdWidth - scrollTop;
+
+     // cd.style.width = newCdWidth > 0 ? newCdWidth + "px" : 0;
+     // cd.style.opacity = newCdWidth / cdWidth;
+   // };
+
+    // Xử lý khi click play
+    // Handle when click play
+    playBtn.onclick = function () {
+      if (_this.isPlaying) {
+        audio.pause();
+      } else {
+        audio.play();
+      }
+    };
+
+    // Khi song được play
+    // When the song is played
+    audio.onplay = function () {
+      _this.isPlaying = true;
+      player.classList.add("playing");
+      cdThumbAnimate.play();
+    };
+
+    // Khi song bị pause
+    // When the song is pause
+    audio.onpause = function () {
+      _this.isPlaying = false;
+      player.classList.remove("playing");
+      cdThumbAnimate.pause();
+    };
+
+    // Khi tiến độ bài hát thay đổi
+    // When the song progress changes
+    audio.ontimeupdate = function () {
+      if (audio.duration) {
+        const progressPercent = Math.floor(
+          (audio.currentTime / audio.duration) * 100
+        );
+        progress.value = progressPercent;
+      }
+    };
+
+    // Xử lý khi tua song
+    // Handling when seek
+    progress.onchange = function (e) {
+      const seekTime = (audio.duration / 100) * e.target.value;
+      audio.currentTime = seekTime;
+    };
+
+    // Khi next song
+    // When next song
+    nextBtn.onclick = function () {
+      if (_this.isRandom) {
+        _this.playRandomSong();
+      } else {
+        _this.nextSong();
+      }
+      audio.play();
+      _this.render();
+      _this.scrollToActiveSong();
+    };
+
+    // Khi prev song
+    // When prev song
+    prevBtn.onclick = function () {
+      if (_this.isRandom) {
+        _this.playRandomSong();
+      } else {
+        _this.prevSong();
+      }
+      audio.play();
+      _this.render();
+      _this.scrollToActiveSong();
+    };
+
+    // Xử lý bật / tắt random song
+    // Handling on / off random song
+    randomBtn.onclick = function (e) {
+      _this.isRandom = !_this.isRandom;
+      _this.setConfig("isRandom", _this.isRandom);
+      randomBtn.classList.toggle("active", _this.isRandom);
+    };
+
+    // Xử lý lặp lại một song
+    // Single-parallel repeat processing
+    repeatBtn.onclick = function (e) {
+      _this.isRepeat = !_this.isRepeat;
+      _this.setConfig("isRepeat", _this.isRepeat);
+      repeatBtn.classList.toggle("active", _this.isRepeat);
+    };
+
+    // Xử lý next song khi audio ended
+    // Handle next song when audio ended
+    audio.onended = function () {
+      if (_this.isRepeat) {
+        audio.play();
+      } else {
+        nextBtn.click();
+      }
+    };
+
+    // Lắng nghe hành vi click vào playlist
+    // Listen to playlist clicks
+    playlist.onclick = function (e) {
+      const songNode = e.target.closest(".song:not(.active)");
+
+      if (songNode || e.target.closest(".option")) {
+        // Xử lý khi click vào song
+        // Handle when clicking on the song
+        if (songNode) {
+          _this.currentIndex = Number(songNode.dataset.index);
+          _this.loadCurrentSong();
+          _this.render();
+          audio.play();
+        }
+
+        // Xử lý khi click vào song option
+        // Handle when clicking on the song option
+        if (e.target.closest(".option")) {
+        }
+      }
+    };
+  },
+  scrollToActiveSong: function () {
+    setTimeout(() => {
+      $(".song.active").scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+      });
+    }, 300);
+  },
+  loadCurrentSong: function () {
+    heading.textContent = this.currentSong.name;
+    cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`;
+    audio.src = this.currentSong.path;
+  },
+  loadConfig: function () {
+    this.isRandom = this.config.isRandom;
+    this.isRepeat = this.config.isRepeat;
+  },
+  nextSong: function () {
+    this.currentIndex++;
+    if (this.currentIndex >= this.songs.length) {
+      this.currentIndex = 0;
+    }
+    this.loadCurrentSong();
+  },
+  prevSong: function () {
+    this.currentIndex--;
+    if (this.currentIndex < 0) {
+      this.currentIndex = this.songs.length - 1;
+    }
+    this.loadCurrentSong();
+  },
+  playRandomSong: function () {
+    let newIndex;
+    do {
+      newIndex = Math.floor(Math.random() * this.songs.length);
+    } while (newIndex === this.currentIndex);
+
+    this.currentIndex = newIndex;
+    this.loadCurrentSong();
+  },
+  start: function () {
+    // Gán cấu hình từ config vào ứng dụng
+    // Assign configuration from config to application
+    this.loadConfig();
+
+    // Định nghĩa các thuộc tính cho object
+    // Defines properties for the object
+    this.defineProperties();
+
+    // Lắng nghe / xử lý các sự kiện (DOM events)
+    // Listening / handling events (DOM events)
+    this.handleEvents();
+
+    // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
+    // Load the first song information into the UI when running the app
+    this.loadCurrentSong();
+
+    // Render playlist
+    this.render();
+
+    // Hiển thị trạng thái ban đầu của button repeat & random
+    // Display the initial state of the repeat & random button
+    randomBtn.classList.toggle("active", this.isRandom);
+    repeatBtn.classList.toggle("active", this.isRepeat);
+  }
+};
+
+app.start();
+
+</script>
+<!-- Design from: https://static.collectui.com/shots/3671744/musicloud-revolutionary-app-for-music-streaming-large -->
